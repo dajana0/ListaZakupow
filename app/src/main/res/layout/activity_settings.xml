@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@android:id/widget_frame"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+
+   >
+
+
+
+    <GridLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="1"
+        android:padding="20px"
+        >
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvCzcionka"
+                style="@android:style/TextAppearance.DeviceDefault.SearchResult.Title"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="Rozmiar czcionki"
+                android:padding="20px"
+                />
+
+
+            <Spinner
+                android:id="@+id/spinnerFontSize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/czcionki"
+                android:padding="25px"
+
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:id="@+id/tvKolor"
+                style="@android:style/TextAppearance.DeviceDefault.SearchResult.Title"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="Kolor czcionki"
+                android:padding="20px"
+
+                />
+
+            <Spinner
+                android:id="@+id/spinnerFontColor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/kolory"
+                android:padding="25px"/>
+
+        </LinearLayout>
+    </GridLayout>
+
+</RelativeLayout>

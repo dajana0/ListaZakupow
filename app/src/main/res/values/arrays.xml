@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="czcionki">
+        <item>Mała</item>
+        <item>Średnia</item>
+        <item>Duża</item>
+    </string-array>
+    <string-array name="kolory">
+        <item>Czarny</item>
+        <item>Czerwony</item>
+        <item>Zielony</item>
+        <item>Niebieski</item>
+    </string-array>
+</resources>

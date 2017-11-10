@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Lista Zakupów</string>
+    <string name="title_activity_list">Twoja lista</string>
+    <string name="title_activity_settings">Ustawienia</string>
+</resources>
