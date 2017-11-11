@@ -2,4 +2,9 @@
     <string name="app_name">Lista Zakupów</string>
     <string name="title_activity_list">Twoja lista</string>
     <string name="title_activity_settings">Ustawienia</string>
+    <string name="zatwierd">Zatwierdź</string>
+    <string name="anuluj">Anuluj</string>
+    <string name="nazwa">Nazwa</string>
+    <string name="ilo">Ilość</string>
+    <string name="cena">Cena</string>
 </resources>

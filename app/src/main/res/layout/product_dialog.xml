@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <GridLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="1"
+        android:padding="20px"
+        >
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvNazwaProduktu"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/nazwa"
+                android:padding="20px"
+                />
+
+
+            <EditText
+                android:id="@+id/etNazwaProduktu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:id="@+id/tvIlosc"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/ilo"
+                android:padding="20px"
+                />
+
+            <EditText
+                android:id="@+id/etIlosc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="numberSigned"
+                />
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:id="@+id/tvCena"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/cena"
+                android:padding="20px"
+                />
+
+            <EditText
+                android:id="@+id/etCena"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="numberDecimal" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:id="@+id/tvKupione"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Ilość"
+                android:padding="20px"
+                />
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+                <CheckBox
+                    android:id="@+id/cbKupione"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_weight="1"
+                    />
+            </RelativeLayout>
+
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <android.support.v4.widget.Space
+                android:layout_width="30px"
+                android:layout_height="match_parent" />
+            <Button
+                android:id="@+id/btAnuluj"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_weight="1"
+                android:text="@string/anuluj"
+                />
+
+            <android.support.v4.widget.Space
+                android:layout_width="100px"
+                android:layout_height="match_parent" />
+
+            <Button
+                android:id="@+id/btZatwierdz"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_weight="1"
+                android:text="@string/zatwierd"
+                />
+            <android.support.v4.widget.Space
+                android:layout_width="30px"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </GridLayout>
+</RelativeLayout>
