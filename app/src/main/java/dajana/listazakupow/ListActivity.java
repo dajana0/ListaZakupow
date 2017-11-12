@@ -10,18 +10,46 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+
+import adapters.CustomAdapter;
+import baza.Baza;
+import models.Product;
 
 public class ListActivity extends AppCompatActivity {
     final Context context =  this;
+    ListView lvProducts;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+        lvProducts = (ListView) findViewById(R.id.lista_produktow) ;
+        zbudujListe();
+       /* lvProducts.setOnTouchListener(new View.OnLongClickListener(getApplicationContext()){
 
+            @Override
+            public boolean onLongClick(View v) {
+                return false;
+            }
+        });*/
+        lvProducts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1,
+                                           int arg2, long arg3) {
+                // TODO Auto-generated method stub
+                Toast.makeText(ListActivity.this, "delete item in position : " + arg2, Toast.LENGTH_SHORT).show();
+            }
+        });
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,6 +73,7 @@ public class ListActivity extends AppCompatActivity {
                             nazwa.setText("");
                             SharedPreferences settings = getSharedPreferences("font_color", 0);
                             nazwa.setTextColor(settings.getInt("color",Color.BLACK));
+                            nazwa.setTypeface(null, Typeface.NORMAL);
                         }
                     }
                 });
@@ -55,21 +84,26 @@ public class ListActivity extends AppCompatActivity {
                         if(nazwa.getText()== null || nazwa.getText().length() == 0){
                             nazwa.setTextColor(Color.RED);
                             nazwa.setTypeface(null, Typeface.BOLD);
-                            nazwa.setText("Wpisz nazwę!!");
+                            nazwa.setText("Wpisz nazwę!");
                         }else{
+                            Baza baza = new Baza(ListActivity.this);
                             EditText ilosc = (EditText) dialog.findViewById(R.id.etIlosc);
                             EditText cena = (EditText) dialog.findViewById(R.id.etCena);
                             CheckBox kupiono = (CheckBox) dialog.findViewById(R.id.cbKupione);
+                            Product product = new Product(nazwa.getText().toString(),kupiono.isChecked() == false? 0:1);
                             if(ilosc.getText().length() == 0){
-
+                                product.setIlosc(1);
                             }else{
-
+                                product.setIlosc(Integer.parseInt(ilosc.getText().toString()));
                             }
                             if(cena.getText().length() == 0){
-
+                                product.setCena(0);
                             }else{
-
+                                product.setCena(Double.parseDouble(ilosc.getText().toString()));
                             }
+                            baza.dodaj(product);
+                            zbudujListe();
+                            dialog.dismiss();
                         }
                     }
                 });
@@ -79,6 +113,9 @@ public class ListActivity extends AppCompatActivity {
     }
 
     private  void zbudujListe(){
+        Baza baza = new Baza(this);
+        CustomAdapter ca = new CustomAdapter(this, baza.getAllProducts());
+        lvProducts.setAdapter(ca);
 
     }
 }
