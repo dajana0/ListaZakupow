@@ -34,20 +34,73 @@ public class ListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list);
         lvProducts = (ListView) findViewById(R.id.lista_produktow) ;
         zbudujListe();
-       /* lvProducts.setOnTouchListener(new View.OnLongClickListener(getApplicationContext()){
-
+        lvProducts.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onLongClick(View v) {
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Baza baza = new Baza(ListActivity.this);
+                baza.usun(position);
+                zbudujListe();
                 return false;
             }
-        });*/
+        });
         lvProducts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
             @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1,
-                                           int arg2, long arg3) {
-                // TODO Auto-generated method stub
-                Toast.makeText(ListActivity.this, "delete item in position : " + arg2, Toast.LENGTH_SHORT).show();
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                final Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.product_dialog);
+                dialog.setTitle("Nowy produkt");
+
+                Button btAnuluj = (Button) dialog.findViewById(R.id.btAnuluj);
+                btAnuluj.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                final EditText nazwa = (EditText) dialog.findViewById(R.id.etNazwaProduktu);
+                nazwa.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (nazwa.getCurrentTextColor() == Color.RED) {
+                            nazwa.setText("");
+                            SharedPreferences settings = getSharedPreferences("font_color", 0);
+                            nazwa.setTextColor(settings.getInt("color", Color.BLACK));
+                            nazwa.setTypeface(null, Typeface.NORMAL);
+                        }
+                    }
+                });
+                Button btZatwierdz = (Button) dialog.findViewById(R.id.btZatwierdz);
+                btZatwierdz.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (nazwa.getText() == null || nazwa.getText().length() == 0) {
+                            nazwa.setTextColor(Color.RED);
+                            nazwa.setTypeface(null, Typeface.BOLD);
+                            nazwa.setText("Wpisz nazwę!");
+                        } else {
+                            Baza baza = new Baza(ListActivity.this);
+                            EditText ilosc = (EditText) dialog.findViewById(R.id.etIlosc);
+                            EditText cena = (EditText) dialog.findViewById(R.id.etCena);
+                            CheckBox kupiono = (CheckBox) dialog.findViewById(R.id.cbKupione);
+                            Product product = new Product(nazwa.getText().toString(), kupiono.isChecked() == false ? 0 : 1);
+                            if (ilosc.getText().length() == 0) {
+                                product.setIlosc(1);
+                            } else {
+                                product.setIlosc(Integer.parseInt(ilosc.getText().toString()));
+                            }
+                            if (cena.getText().length() == 0) {
+                                product.setCena(0);
+                            } else {
+                                product.setCena(Double.parseDouble(ilosc.getText().toString()));
+                            }
+                            baza.dodaj(product);
+                            zbudujListe();
+                            dialog.dismiss();
+                        }
+                    }
+                });
+                dialog.show();
             }
         });
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
