@@ -45,6 +45,13 @@
             android:focusable="false"/>
 
     </LinearLayout>
+    <TextView
+        android:id="@+id/produktID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:focusable="false"
+        android:visibility="gone"
+        />
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

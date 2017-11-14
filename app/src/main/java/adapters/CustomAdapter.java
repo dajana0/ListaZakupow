@@ -69,6 +69,9 @@ public class CustomAdapter extends BaseAdapter
         tvCena.setText(String.valueOf(product.getCena()));
         tvIlosc.setText(String.valueOf(product.getIlosc()));
         cbKupiono.setChecked(product.getKupiono() == 0?false:true);
+        TextView produktID = (TextView) convertView.findViewById(R.id.produktID);
+        produktID.setText(String.valueOf(product.getId()));
+        convertView.setId(product.getId());
         return convertView;
     }
 }

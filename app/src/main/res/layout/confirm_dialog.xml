@@ -1,0 +1,65 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <GridLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="1"
+        android:padding="20px"
+        >
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Czy jesteś pewien, że chcesz usunąć produkt?"
+                android:padding="20px"
+                android:textAlignment="center"
+                />
+
+
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <android.support.v4.widget.Space
+                android:layout_width="30px"
+                android:layout_height="match_parent" />
+            <Button
+                android:id="@+id/btAnuluj"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_weight="1"
+                android:text="@string/anuluj"
+                />
+
+            <android.support.v4.widget.Space
+                android:layout_width="100px"
+                android:layout_height="match_parent" />
+
+            <Button
+                android:id="@+id/btZatwierdz"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_weight="1"
+                android:text="@string/zatwierd"
+                />
+            <android.support.v4.widget.Space
+                android:layout_width="30px"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </GridLayout>
+</RelativeLayout>

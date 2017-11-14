@@ -39,7 +39,7 @@ public class Product {
     }
 
     public double getCena() {
-        return cena;
+        return (double)cena/100;
     }
 
     public void setCena(double cena) {

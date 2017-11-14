@@ -92,7 +92,7 @@
                 android:id="@+id/tvKupione"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="Ilość"
+                android:text="Kupiono"
                 android:padding="20px"
                 />
             <RelativeLayout

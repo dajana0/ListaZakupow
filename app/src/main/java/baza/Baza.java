@@ -29,6 +29,15 @@ public class Baza extends SQLiteOpenHelper{
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
+    public Product pobierz(int id){
+        SQLiteDatabase db = getReadableDatabase();
+        String[] kolumny = {"id","nazwa","cena","ilosc","kupiono"};
+        String [] arguments = {""+id};
+        Cursor kursor = db.query("lista_produktow",kolumny,"id=?",arguments,null,null,null);
+        kursor.moveToFirst();
+        Product product = new Product(kursor.getInt(0),kursor.getString(1), kursor.getInt(2), kursor.getInt(3),kursor.getInt(4));
+        return product;
+    }
 
     public void dodaj(Product product){
         SQLiteDatabase db = getWritableDatabase();
@@ -39,16 +48,26 @@ public class Baza extends SQLiteOpenHelper{
         wartosci.put("kupiono",product.getKupiono());
         db.insertOrThrow("lista_produktow",null,wartosci);
     }
+    public void zmien(Product product){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues wartosci = new ContentValues();
+        wartosci.put("nazwa",product.getNazwa());
+        wartosci.put("cena",product.getNazwa());
+        wartosci.put("ilosc",product.getNazwa());
+        wartosci.put("kupiono",product.getKupiono());
+        db.update("lista_produktow",wartosci,"id="+ product.getId(),null);
+    }
     public void usun(int id){
         SQLiteDatabase db = getWritableDatabase();
         String [] arguments = {""+id};
         db.delete("lista_produktow","id=?",arguments);
+
     }
 
     public ArrayList<Product> getAllProducts(){
         String[] kolumny = {"id","nazwa","cena","ilosc","kupiono"};
         SQLiteDatabase db = getReadableDatabase();
-        Cursor kursor = db.query("lista_produktow",kolumny,null,null,null,null,"kupiono");
+        Cursor kursor = db.query("lista_produktow",kolumny,null,null,null,null,null);
         ArrayList<Product> result = new ArrayList<Product>();
         while(kursor.moveToNext()){
             Product product = new Product(kursor.getInt(0),kursor.getString(1), kursor.getInt(2), kursor.getInt(3),kursor.getInt(4));
