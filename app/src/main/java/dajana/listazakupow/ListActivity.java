@@ -127,6 +127,8 @@ public class ListActivity extends AppCompatActivity {
                             }else{
                                 product.setCena(Double.parseDouble(ilosc.getText().toString()));
                             }
+                           // getContentResolver().update(
+                             //       ProductProvider.CONTENT_URI, values);
                             baza.zmien(product);
                             zbudujListe();
                             dialog.dismiss();
@@ -169,23 +171,8 @@ public class ListActivity extends AppCompatActivity {
                     public void onClick(View v) {
 
                         ContentValues values = new ContentValues();
-                        values.put(ProductProvider.NAZWA,
-                                ((EditText)dialog.findViewById(R.id.etNazwaProduktu)).getText().toString());
 
-                        values.put(ProductProvider.CENA,
-                                ((EditText)dialog.findViewById(R.id.etCena)).getText().toString());
-
-                        Uri uri = getContentResolver().insert(
-                                ProductProvider.CONTENT_URI, values);
-
-                        Toast.makeText(getBaseContext(),
-                                uri.toString(), Toast.LENGTH_LONG).show();
-
-
-
-
-
-                        /*if(nazwa.getText()== null || nazwa.getText().length() == 0){
+                        if(nazwa.getText()== null || nazwa.getText().length() == 0){
                             nazwa.setTextColor(Color.RED);
                             nazwa.setTypeface(null, Typeface.BOLD);
                             nazwa.setText("Wpisz nazwę!");
@@ -205,10 +192,16 @@ public class ListActivity extends AppCompatActivity {
                             }else{
                                 product.setCena(Double.parseDouble(cena.getText().toString()));
                             }
-                            baza.dodaj(product);*/
+                            //baza.dodaj(product);
+                            values.put(ProductProvider.NAZWA, product.getNazwa());
+                            values.put(ProductProvider.CENA, product.getCena() * 100);
+                            values.put(ProductProvider.ILOSC, product.getIlosc());
+                            values.put(ProductProvider.KUPIONO, product.getKupiono());
+                            getContentResolver().insert(
+                                    ProductProvider.CONTENT_URI, values);
                             zbudujListe();
                             dialog.dismiss();
-                        // }
+                         }
                     }
                 });
                 dialog.show();
@@ -217,13 +210,14 @@ public class ListActivity extends AppCompatActivity {
     }
 
     private  void zbudujListe(){
-       // Baza baza = new Baza(this);
-        // Retrieve student records
+        //Baza baza = new Baza(this);
+        //CustomAdapter ca = new CustomAdapter(this, baza.getAllProducts());
         String URL = "content://dajana.listazakupow.ProductsProvider";
         String[] kolumny = {"id","nazwa","cena","ilosc","kupiono"};
         Uri products = Uri.parse(URL);
-        Cursor kursor = getContentResolver().query(products,kolumny,null,null,"kupiono");// managedQuery(products, null, null, null, "name");
+        Cursor kursor = getContentResolver().query(products,kolumny,null,null,"kupiono, nazwa");// managedQuery(products, null, null, null, "name");
         ArrayList<Product> result = new ArrayList<Product>();
+        kursor.moveToFirst();
         while(kursor.moveToNext()){
             Product product = new Product(kursor.getInt(0),kursor.getString(1), kursor.getInt(2), kursor.getInt(3),kursor.getInt(4));
             result.add(product);
@@ -233,21 +227,5 @@ public class ListActivity extends AppCompatActivity {
         lvProducts.setAdapter(ca);
 
 
-    }
-
-    public void onClickAdd(){
-        // Add a new student record
-        ContentValues values = new ContentValues();
-        values.put(ProductProvider.NAZWA,
-                ((EditText)findViewById(R.id.etNazwaProduktu)).getText().toString());
-
-        values.put(ProductProvider.CENA,
-                ((EditText)findViewById(R.id.etCena)).getText().toString());
-
-        Uri uri = getContentResolver().insert(
-                ProductProvider.CONTENT_URI, values);
-
-        Toast.makeText(getBaseContext(),
-                uri.toString(), Toast.LENGTH_LONG).show();
     }
 }
