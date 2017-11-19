@@ -8,9 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import baza.Baza;
+import dajana.listazakupow.ListActivity;
 import dajana.listazakupow.R;
 import dajana.listazakupow.SettingsActivity;
 import models.Product;
@@ -47,8 +51,7 @@ public class CustomAdapter extends BaseAdapter
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
-        Product product = productsList.get(position);
+        final Product product = productsList.get(position);
         convertView = LayoutInflater.from(mContext).inflate(R.layout.product_item,null);
         SharedPreferences settingsSize = mContext.getSharedPreferences("font_size", 0);
         SharedPreferences settingsColor = mContext.getSharedPreferences("font_color", 0);
@@ -65,6 +68,14 @@ public class CustomAdapter extends BaseAdapter
         tvIlosc.setTextSize(settingsSize.getFloat("size", SettingsActivity.FONT_MED));
 
         CheckBox cbKupiono= (CheckBox) convertView.findViewById(R.id.kupiono);
+        /*cbKupiono.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Baza baza = new Baza(c);
+                product.setKupiono(product.getKupiono() == 1? 0:1);
+                baza.zmien(product);
+            }
+        });*/
         tvNazwa.setText(product.getNazwa());
         tvCena.setText(String.valueOf(product.getCena()));
         tvIlosc.setText(String.valueOf(product.getIlosc()));

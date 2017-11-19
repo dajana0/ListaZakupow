@@ -15,7 +15,7 @@ public class Product {
         this.kupiono=kupiono;
     }
 
-    public Product(int id, String nazwa,int ilosc, int cena, int kupiono){
+    public Product(int id, String nazwa, int cena, int ilosc,int kupiono){
         this.id = id;
         this.nazwa = nazwa;
         this.ilosc = ilosc;
@@ -46,7 +46,7 @@ public class Product {
         this.cena = (int)(cena*100);
     }
 
-    public double getKupiono() {
+    public int getKupiono() {
 
         return  this.kupiono;
     }

@@ -180,7 +180,7 @@ public class ListActivity extends AppCompatActivity {
                             if(cena.getText().length() == 0){
                                 product.setCena(0);
                             }else{
-                                product.setCena(Double.parseDouble(ilosc.getText().toString()));
+                                product.setCena(Double.parseDouble(cena.getText().toString()));
                             }
                             baza.dodaj(product);
                             zbudujListe();
@@ -198,6 +198,7 @@ public class ListActivity extends AppCompatActivity {
 
         CustomAdapter ca = new CustomAdapter(this, baza.getAllProducts());
         lvProducts.setAdapter(ca);
+
 
     }
 }

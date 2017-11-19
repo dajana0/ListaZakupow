@@ -43,8 +43,8 @@ public class Baza extends SQLiteOpenHelper{
         SQLiteDatabase db = getWritableDatabase();
         ContentValues wartosci = new ContentValues();
         wartosci.put("nazwa",product.getNazwa());
-        wartosci.put("cena",product.getNazwa());
-        wartosci.put("ilosc",product.getNazwa());
+        wartosci.put("ilosc",product.getIlosc());
+        wartosci.put("cena",product.getCena()*100);
         wartosci.put("kupiono",product.getKupiono());
         db.insertOrThrow("lista_produktow",null,wartosci);
     }
@@ -52,8 +52,8 @@ public class Baza extends SQLiteOpenHelper{
         SQLiteDatabase db = getWritableDatabase();
         ContentValues wartosci = new ContentValues();
         wartosci.put("nazwa",product.getNazwa());
-        wartosci.put("cena",product.getNazwa());
-        wartosci.put("ilosc",product.getNazwa());
+        wartosci.put("ilosc",product.getIlosc());
+        wartosci.put("cena",product.getCena()*100);
         wartosci.put("kupiono",product.getKupiono());
         db.update("lista_produktow",wartosci,"id="+ product.getId(),null);
     }
@@ -67,7 +67,7 @@ public class Baza extends SQLiteOpenHelper{
     public ArrayList<Product> getAllProducts(){
         String[] kolumny = {"id","nazwa","cena","ilosc","kupiono"};
         SQLiteDatabase db = getReadableDatabase();
-        Cursor kursor = db.query("lista_produktow",kolumny,null,null,null,null,null);
+        Cursor kursor = db.query("lista_produktow",kolumny,null,null,null,null,"kupiono");
         ArrayList<Product> result = new ArrayList<Product>();
         while(kursor.moveToNext()){
             Product product = new Product(kursor.getInt(0),kursor.getString(1), kursor.getInt(2), kursor.getInt(3),kursor.getInt(4));
