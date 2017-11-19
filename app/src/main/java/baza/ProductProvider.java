@@ -20,16 +20,16 @@ import java.util.HashMap;
  * Created by Dajana on 19.11.2017.
  */
 
-public class ContentProvider extends android.content.ContentProvider{
+public class ProductProvider extends android.content.ContentProvider{
     static final String PROVIDER_NAME = "dajana.listazakupow.ProductsProvider";
     static final String URL = "content://" + PROVIDER_NAME + "/products";
-    static final Uri CONTENT_URI = Uri.parse(URL);
+    public static final Uri CONTENT_URI = Uri.parse(URL);
 
     static final String _ID = "_id";
-    static final String NAZWA = "nazwa";
-    static final String CENA = "cena";
-    static final String ILOSC = "ilosc";
-    static final String KUPIONO = "kupiono";
+    public static final String NAZWA = "nazwa";
+    public static final String CENA = "cena";
+    public static final String ILOSC = "ilosc";
+    public static final String KUPIONO = "kupiono";
 
     static final int PRODUCTS = 1;
     static final int PRODUCT_ID = 2;

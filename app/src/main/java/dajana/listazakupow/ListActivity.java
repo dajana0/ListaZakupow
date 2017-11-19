@@ -1,10 +1,14 @@
 package dajana.listazakupow;
 
 import android.app.Dialog;
+import android.content.ContentProvider;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -24,6 +28,7 @@ import java.util.ArrayList;
 
 import adapters.CustomAdapter;
 import baza.Baza;
+import baza.ProductProvider;
 import models.Product;
 
 public class ListActivity extends AppCompatActivity {
@@ -162,7 +167,25 @@ public class ListActivity extends AppCompatActivity {
                 btZatwierdz.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(nazwa.getText()== null || nazwa.getText().length() == 0){
+
+                        ContentValues values = new ContentValues();
+                        values.put(ProductProvider.NAZWA,
+                                ((EditText)dialog.findViewById(R.id.etNazwaProduktu)).getText().toString());
+
+                        values.put(ProductProvider.CENA,
+                                ((EditText)dialog.findViewById(R.id.etCena)).getText().toString());
+
+                        Uri uri = getContentResolver().insert(
+                                ProductProvider.CONTENT_URI, values);
+
+                        Toast.makeText(getBaseContext(),
+                                uri.toString(), Toast.LENGTH_LONG).show();
+
+
+
+
+
+                        /*if(nazwa.getText()== null || nazwa.getText().length() == 0){
                             nazwa.setTextColor(Color.RED);
                             nazwa.setTypeface(null, Typeface.BOLD);
                             nazwa.setText("Wpisz nazwę!");
@@ -182,10 +205,10 @@ public class ListActivity extends AppCompatActivity {
                             }else{
                                 product.setCena(Double.parseDouble(cena.getText().toString()));
                             }
-                            baza.dodaj(product);
+                            baza.dodaj(product);*/
                             zbudujListe();
                             dialog.dismiss();
-                        }
+                        // }
                     }
                 });
                 dialog.show();
@@ -194,11 +217,37 @@ public class ListActivity extends AppCompatActivity {
     }
 
     private  void zbudujListe(){
-        Baza baza = new Baza(this);
+       // Baza baza = new Baza(this);
+        // Retrieve student records
+        String URL = "content://dajana.listazakupow.ProductsProvider";
+        String[] kolumny = {"id","nazwa","cena","ilosc","kupiono"};
+        Uri products = Uri.parse(URL);
+        Cursor kursor = getContentResolver().query(products,kolumny,null,null,"kupiono");// managedQuery(products, null, null, null, "name");
+        ArrayList<Product> result = new ArrayList<Product>();
+        while(kursor.moveToNext()){
+            Product product = new Product(kursor.getInt(0),kursor.getString(1), kursor.getInt(2), kursor.getInt(3),kursor.getInt(4));
+            result.add(product);
+        }
 
-        CustomAdapter ca = new CustomAdapter(this, baza.getAllProducts());
+        CustomAdapter ca = new CustomAdapter(this, result);
         lvProducts.setAdapter(ca);
 
 
+    }
+
+    public void onClickAdd(){
+        // Add a new student record
+        ContentValues values = new ContentValues();
+        values.put(ProductProvider.NAZWA,
+                ((EditText)findViewById(R.id.etNazwaProduktu)).getText().toString());
+
+        values.put(ProductProvider.CENA,
+                ((EditText)findViewById(R.id.etCena)).getText().toString());
+
+        Uri uri = getContentResolver().insert(
+                ProductProvider.CONTENT_URI, values);
+
+        Toast.makeText(getBaseContext(),
+                uri.toString(), Toast.LENGTH_LONG).show();
     }
 }
