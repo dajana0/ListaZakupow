@@ -87,9 +87,15 @@ public class ListActivity extends AppCompatActivity {
                 final EditText ilosc = (EditText) dialog.findViewById(R.id.etIlosc);
                 final EditText cena = (EditText) dialog.findViewById(R.id.etCena);
                 final CheckBox kupiono = (CheckBox) dialog.findViewById(R.id.cbKupione);
-                final Baza baza = new Baza(ListActivity.this);
-                final Product p = baza.pobierz(view.getId());
+                //final Baza baza = new Baza(ListActivity.this);
+                //String URL = "content://dajana.listazakupow.ProductsProvider";
 
+                //final Uri products = Uri.parse(URL);
+                String [] arguments = {""+String.valueOf(view.getId())};
+                Cursor baza =  getContentResolver().query(ProductProvider.CONTENT_URI,null,"id=?",arguments,null);
+                baza.moveToFirst();
+               // final Product p = baza.pobierz(view.getId());
+                final Product p = new Product(baza.getInt(0),baza.getString(1),baza.getInt(2),baza.getInt(3),baza.getInt(4));
                 nazwa.setText(p.getNazwa());
                 ilosc.setText(String.valueOf(p.getIlosc()));
                 cena.setText(String.valueOf(p.getCena()));
@@ -109,12 +115,14 @@ public class ListActivity extends AppCompatActivity {
                 btZatwierdz.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        ContentValues values = new ContentValues();
                         if(nazwa.getText()== null || nazwa.getText().length() == 0){
                             nazwa.setTextColor(Color.RED);
                             nazwa.setTypeface(null, Typeface.BOLD);
                             nazwa.setText("Wpisz nazwę!");
                         }else{
-                            Baza baza = new Baza(ListActivity.this);
+                            //Baza baza = new Baza(ListActivity.this);
+
                             Product product = new Product(nazwa.getText().toString(),kupiono.isChecked() == false? 0:1);
                             product.setId(p.getId());
                             if(ilosc.getText().length() == 0){
@@ -127,9 +135,12 @@ public class ListActivity extends AppCompatActivity {
                             }else{
                                 product.setCena(Double.parseDouble(ilosc.getText().toString()));
                             }
-                           // getContentResolver().update(
-                             //       ProductProvider.CONTENT_URI, values);
-                            baza.zmien(product);
+                            values.put(ProductProvider.NAZWA, product.getNazwa());
+                            values.put(ProductProvider.CENA, product.getCena() * 100);
+                            values.put(ProductProvider.ILOSC, product.getIlosc());
+                            values.put(ProductProvider.KUPIONO, product.getKupiono());
+                            getContentResolver().update(ProductProvider.CONTENT_URI,values, "id="+ product.getId(),null);
+                            //baza.zmien(product);
                             zbudujListe();
                             dialog.dismiss();
                         }

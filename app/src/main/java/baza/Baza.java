@@ -34,6 +34,7 @@ public class Baza extends SQLiteOpenHelper{
         String[] kolumny = {"id","nazwa","cena","ilosc","kupiono"};
         String [] arguments = {""+id};
         Cursor kursor = db.query("lista_produktow",kolumny,"id=?",arguments,null,null,null);
+
         kursor.moveToFirst();
         Product product = new Product(kursor.getInt(0),kursor.getString(1), kursor.getInt(2), kursor.getInt(3),kursor.getInt(4));
         return product;

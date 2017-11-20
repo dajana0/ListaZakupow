@@ -14,7 +14,7 @@ public class Product {
         this.nazwa = nazwa;
         this.kupiono=kupiono;
     }
-
+    public Product(){}
     public Product(int id, String nazwa, int cena, int ilosc,int kupiono){
         this.id = id;
         this.nazwa = nazwa;
