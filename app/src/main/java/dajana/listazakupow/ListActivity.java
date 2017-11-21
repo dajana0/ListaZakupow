@@ -59,8 +59,10 @@ public class ListActivity extends AppCompatActivity {
                 btZatwierdz.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Baza baza = new Baza(ListActivity.this);
-                        baza.usun(productID);
+                        //Baza baza = new Baza(ListActivity.this);
+                       // baza.usun(productID);
+                        String [] arguments = {""+productID};
+                        getContentResolver().delete(ProductProvider.CONTENT_URI, "id=?",arguments);
                         dialog.dismiss();
                         zbudujListe();
                     }
@@ -133,7 +135,7 @@ public class ListActivity extends AppCompatActivity {
                             if(cena.getText().length() == 0){
                                 product.setCena(0);
                             }else{
-                                product.setCena(Double.parseDouble(ilosc.getText().toString()));
+                                product.setCena(Double.parseDouble(cena.getText().toString()));
                             }
                             values.put(ProductProvider.NAZWA, product.getNazwa());
                             values.put(ProductProvider.CENA, product.getCena() * 100);
